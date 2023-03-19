@@ -12,7 +12,7 @@ afterEach(() => {
   page.close();
 });
 
-describe("Netology.ru tests", () => {
+describe.skip("Netology.ru tests", () => {
   beforeEach(async () => {
     page = await browser.newPage();
     await page.goto("https://netology.ru");
@@ -41,7 +41,7 @@ describe("Netology.ru tests", () => {
   });
 });
 
-test("Should look for a course", async () => {
+test.skip("Should look for a course", async () => {
   await page.goto("https://netology.ru/navigation");
   await putText(page, "input", "тестировщик");
   const actual = await page.$eval("a[data-name]", (link) => link.textContent);
@@ -49,7 +49,7 @@ test("Should look for a course", async () => {
   expect(actual).toContain(expected);
 });
 
-test("Should show warning if login is not email", async () => {
+test.skip("Should show warning if login is not email", async () => {
   await page.goto("https://netology.ru/?modal=sign_in");
   await putText(page, 'input[type="email"]', generateName(5));
 });

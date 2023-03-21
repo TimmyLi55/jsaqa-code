@@ -2,13 +2,16 @@ const jestConfig = require("./jest.config");
 
 let page;
 
+beforeEach(async () => {
+  page = await browser.newPage();
+}, 10000);
+
 afterEach(() => {
   page.close();
 }, 10000);
 
 describe("Github team page tests", () => {
   beforeEach(async () => {
-    page = await browser.newPage();
     await page.goto("https://github.com/team");
   }, 10000);
   test("The h1 header content'", async () => {
@@ -38,7 +41,6 @@ describe("Github team page tests", () => {
 
 describe("Github marketplace page tests", () => {
   beforeEach(async () => {
-    page = await browser.newPage();
     await page.goto("https://github.com/marketplace");
   }, 10000);
   test("Проверка открытия страницы'", async () => {

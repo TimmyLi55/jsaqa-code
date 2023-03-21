@@ -36,21 +36,26 @@ describe("Позитивный тест", () => {
   it("Тестирование бронирования на первной странице", async () => {
     let selectSecondFilm = '[data-seance-id="139"]';
     let selectButton = '[class="acceptin-button"]';
-    let expectText = "Вы выбрали билеты:";
+    let acceptButton = '[class="acceptin-button"]';
+    //let expectText = "Вы выбрали билеты:";   // старая версия
+    let expectText = "Электронный билет";
     await clickElement(page, selectSecondFilm);
     await clickOnSelectedPlace(page, 1);
     await clickElement(page, selectButton);
+    await clickElement(page, acceptButton);
+    //let textFromPage = await getText(page, '[class="ticket__check-title"]');  // старая версия
     let textFromPage = await getText(page, '[class="ticket__check-title"]');
     expect(expectText).contain(textFromPage);
   });
 });
-describe("Негативный тест", () => {
+describe.only("Негативный тест", () => {
   it("Выбор уже забранированного места", async () => {
-    let selectFirstFilm = '[data-seance-id="140"]';
+    let selectFirstFilm = '[data-seance-id="139"]';
     await clickElement(page, selectFirstFilm);
     await clickOnSelectedPlace(page, 1);
-    let selectButton = await page.$('[class="acceptin-button"]');
-    let isVisible = await selectButton.isIntersectingViewport();
-    expect(isVisible).to.be.false;
+    let selectButton = await page.$(
+      '[class="acceptin-button"][disabled="true"]'
+    );
+    expect(selectButton).to.exist;
   });
 });

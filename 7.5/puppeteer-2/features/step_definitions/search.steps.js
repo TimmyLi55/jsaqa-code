@@ -48,14 +48,16 @@ Given(
   }
 );
 
-When("выбор дня недели суббота", async function () {
-  let selectForDate = '[data-time-stamp="1679691600"]';
-  return await clickElement(this.page, selectForDate);
+When("выбор дня недели {string}", async function (day) {
+  let selectForDate = await this.page.$x(`//*[contains(text(), '${day}')]`);
+  return await selectForDate[0].click();
 });
 
-When("выбор фильма Train arrival и времени 09:00", async function () {
-  let selectForTime = '[data-seance-id="141"]';
-  return await clickElement(this.page, selectForTime);
+When("выбор фильма по времени {string}", async function (timeBegin) {
+  let selectForTime = await this.page.$x(
+    `//*[contains(text(), '${timeBegin}')]`
+  );
+  return await selectForTime[0].click();
 });
 
 Then(
@@ -67,11 +69,6 @@ Then(
     expect(timeBegin).to.contain(selectTime);
   }
 );
-
-When("выбор второго фильма и зала TEST HALL на 23:45", async function () {
-  let selectSecondFilm = '[data-seance-id="139"]';
-  return await clickElement(this.page, selectSecondFilm);
-});
 
 When(
   "выбор места № {string} в первом ряду и нажатие забронировать",
@@ -92,9 +89,9 @@ Then(
     expect(string).contain(textFromPage);
   }
 );
-When("выбор первого фильма и времени 12:00", async function () {
-  let selectSecondFilm = '[data-seance-id="140"]';
-  return await clickElement(this.page, selectSecondFilm);
+Then("нажатие на кнопку {string}", async function (string) {
+  let button = await this.page.$x(`//*[contains(text(), '${string}')]`);
+  await clickElement(this.page, button);
 });
 
 When("выбор места № {string} в первом ряду", async function (string) {
@@ -104,7 +101,8 @@ When("выбор места № {string} в первом ряду", async functi
 });
 
 Then("кнопка Забронировать серая", async function () {
-  let selectButton = await this.page.$('[class="acceptin-button"]');
-  let isVisible = await selectButton.isIntersectingViewport();
-  expect(isVisible).to.be.false;
+  let selectButton = await this.page.$(
+    '[class="acceptin-button"][disabled="true"]'
+  );
+  expect(selectButton).to.exist;
 });

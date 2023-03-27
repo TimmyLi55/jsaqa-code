@@ -1,0 +1,21 @@
+{
+  "name": "cypress_1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test_chrome": "cypress open --browser chrome",
+    "test_chrome_h": "cypress run --browser chrome --headless",
+    "test_firefox": "cypress open --browser firefox --config-file cypress_mobile.config.js",
+    "test_firefox_h": "cypress run --browser firefox --headless --config-file cypress_mobile.config.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^12.8.1",
+    "faker-js": "^1.0.0"
+  },
+  "devDependencies": {
+    "faker": "^6.6.6"
+  }
+}
